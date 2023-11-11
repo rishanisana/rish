@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
+        
+  <link href="https://fonts.googleapis.com/css2?family=Merienda&family=Monsieur+La+Doulaise&family=Parisienne&family=Sacramento&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond&family=La+Belle+Aurore&family=Sacramento&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond&family=La+Belle+Aurore&family=Sacramento&family=WindSong&display=swap" rel="stylesheet">
+  
+  
+
+        <title>Responsive menu dropdown</title>
+        <style>
+          /*===== GOOGLE FONTS =====*/
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap");
+
+/*===== VARIABLES CSS =====*/
+:root {
+  --header-height: 3rem;
+
+  /*===== Colors =====*/
+  --first-color: #5B65F5;
+  --first-color-light: #C4C7F5;
+  --dark-color: #0E1026;
+  --white-color: #FBFBFB;
+
+  /*===== Font and typography =====*/
+  --body-font: 'Open Sans', sans-serif;
+  --nav-name-font-size: 1.5rem;
+  --normal-font-size: .938rem;
+
+  /*===== z index =====*/
+  --z-fixed: 100;
+}
+
+.message-symbol
+	{
+	position: fixed;
+  bottom: 50px;
+  right: 10px;
+  
+  
+  }
+  .logo-button{
+background-color:#C4D7B2;
+width:100px;
+height:25px;
+border-radius:10px;
+font-family:'Libre Baskerville', serif;
+		color:Tan;
+}
+
+	
+	.chat-container {
+  --light-color: #fff;
+  height: 420px;
+  width: 600px;
+  background: var(--light-color);
+  position: fixed;
+  bottom: 50px;
+  right: 10px;
+  box-shadow: 0px 0px 15px 0px black;
+}
+.chat-header {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  padding: 0px 30px;
+  background-color: Tan;
+  color: black;
+  font-size: 1.5rem;
+}
+
+.chat-header .logo {
+  height: 35px;
+  width: 35px;
+  box-shadow:Tan;
+}
+.chat-header img {
+  height: 100%;
+  width: 100%;
+}
+.chat-header .title {
+  padding-left: 10px;
+}
+.chat-body {
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  padding: 8px 10px;
+  align-items: flex-end;
+  overflow-y: auto;
+}
+.chat-input {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  border-top: 1px solid #ccc;
+}
+.input-sec {
+  flex: 9;
+}
+.send {
+  flex: 1;
+  padding-right: 4px;
+  background-color:Tan;
+  color:black;
+  
+}
+#txtInput {
+  line-height: 30px;
+  padding: 8px 10px;
+  border: none;
+  outline: none;
+  caret-color: black;
+  font-size: 1rem;
+  width: 100%;
+}
+
+.chatbot-message,
+.user-message {
+  padding: 8px;
+  background: #ccc;
+  margin: 5px;
+  width: max-content;
+  border-radius: 10px 3px 10px 10px;
+}
+.chatbot-message {
+  background: #0652c0;
+  color: var(--light-color);
+  align-self: flex-start;
+  border-radius: 10px 10px 3px 10px;
+}
+.close-button {
+        font-size: 20px;
+        cursor: pointer;
+        color: #555;
+        position: absolute;
+        top: 10px;
+        right: 15px;
+      }
+
+      .responsive-figure {
+    max-width: 100%;
+    display: block;
+}
+
+.responsive-figure img {
+    max-width: 100%;
+    height: auto;
+}
+
+.responsive-figure figcaption {
+    text-align: center;
+    font-style: italic;
+}
+
+@media screen and (min-width: 768px) {
+  :root {
+    --nav-name-font-size: 1rem;
+    --normal-font-size: 1rem;
+  }
+}
+
+/*===== BASE =====*/
+*, ::before, ::after {
+  box-sizing: border-box;
+}
+
+
+body {
+  margin: var(--header-height) 0 0 0;
+  font-family: var(--body-font);
+  font-size: var(--normal-font-size);
+  font-weight: 600;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+.bd-grid {
+  max-width: 1024px;
+  display: grid;
+  grid-template-columns: 100%;
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
+}
+
+/*===== HEADER =====*/
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--header-height);
+  padding: 0 1rem;
+  background-color: #FFF;
+  z-index: var(--z-fixed);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.header__logo {
+  color: var(--dark-color);
+}
+
+.header__toggle {
+  font-size: 1.7rem;
+  cursor: pointer;
+}
+
+/*===== NAV =====*/
+@media screen and (max-width: 768px) {
+  .nav {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    background-color: var(--first-color);
+    width: 80%;
+    height: 100vh;
+    padding: 2rem 0;
+    z-index: var(--z-fixed);
+    transition: .5s;
+    overflow-y: auto;
+  }
+}
+
+.nav__content {
+  display: flex;
+  flex-direction: column;
+}
+
+.nav__perfil {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.nav__img {
+  display: flex;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.nav__img img {
+  width: 70px;
+}
+.video-container {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio (change as needed) */
+    height: 0;
+    overflow: hidden;
+}
+
+
+video {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.nav__name {
+  display: block;
+  font-size: var(--nav-name-font-size);
+  color: var(--white-color);
+}
+
+.nav__item {
+  margin-bottom: 2rem;
+}
+
+.nav__link {
+  color: var(--first-color-light);
+}
+
+.nav__link:hover {
+  color: var(--white-color);
+}
+
+/*Show menu*/
+.show {
+  left: 0;
+}
+
+/*Active link*/
+.active {
+  color: var(--white-color);
+}
+
+/*=== Dropdown ===*/
+.dropdown__link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dropdown__icon {
+  font-size: 1.3rem;
+  transition: .5s;
+}
+
+.dropdown__menu {
+  margin: 1rem 0 0 1rem;
+  display: none;
+}
+
+.dropdown__item {
+  margin: 1rem 0;
+}
+
+.dropdown:hover > .dropdown__menu {
+  display: block;
+}
+
+.dropdown:hover .dropdown__icon {
+  transform: rotate(180deg);
+}
+
+/* ===== MEDIA QUERIES=====*/
+@media screen and (min-width: 576px) {
+  .nav {
+    width: 288px;
+  }
+ 
+}
+
+
+@media screen and (min-width: 768px) {
+  body {
+    margin: 0;
+  }
+  .header {
+    height: calc(var(--header-height) + 1rem);
+  }
+  .header__logo, .header__toggle {
+    display: none;
+  }
+  .nav {
+    width: 100%;
+  }
+  .nav__content {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .nav__perfil {
+    flex-direction: row;
+    text-align: initial;
+    margin-bottom: 0;
+  }
+  .nav__img {
+    width: 40px;
+    height: 40px;
+    margin-right: .5rem;
+    margin-bottom: 0;
+  }
+  .nav__img img {
+    width: 46px;
+  }
+  .nav__name {
+    color: var(--dark-color);
+  }
+  .nav__list {
+    display: flex;
+    align-items: center;
+  }
+  .nav__item {
+    margin: 0 1.5rem;
+    padding: 1.4rem 0;
+  }
+  .nav__link {
+    color: var(--dark-color);
+  }
+  .nav__link:hover {
+    color: var(--first-color);
+  }
+  /*Active link new color*/
+  .active {
+    color: var(--first-color);
+  }
+  .dropdown {
+    position: relative;
+  }
+  .dropdown__menu {
+    position: fixed;
+    margin: 0;
+    top: calc(var(--header-height) + 1rem);
+    padding: .5rem 1.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: .5rem;
+  }
+  .dropdown__item {
+    margin: .5rem 0;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .bd-grid {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+        </style>
+    </head>
+    <body>
+        <header class="header">
+            <a href="#" class="header__logo">Clay</a>
+
+            <i class='bx bx-menu header__toggle' id="header-toggle"></i>
+
+            <nav class="nav" id="nav-menu">
+                <div class="nav__content bd-grid">
+                    <a href="" class="nav__perfil">
+                        <div class="nav__img">
+                            <img src="assets/img/perfil.jpg" alt="">
+                        </div>
+                        
+                        <div>
+                            <span class="nav__name"><img src="./logo1.jpg"height="70px" width="200px"></span>
+                            
+                        </div>
+                    </a>
+    
+                    <div class="nav__menu">
+                        <ul class="nav__list">
+                            <li class="nav__item"><a href="#" class="nav__link active">Home</a></li>
+    
+                            <li class="nav__item dropdown">
+                                <a href="#" class="nav__link dropdown__link">About <i class='bx bx-chevron-down dropdown__icon'></i></a>
+                                    
+    
+                                <ul class="dropdown__menu">
+                                    <li class="dropdown__item"><a href="#" class="nav__link">Our Designers</a></li>
+                                    <li class="dropdown__item"><a href="#" class="nav__link">Portfolio</a></li>
+                                    <li class="dropdown__item"><a href="#" class="nav__link">Services</a></li>
+                                </ul>
+                            </li>
+    
+                            <li class="nav__item"><a href="#" class="nav__link">Get Estimate</a></li>
+
+                            
+
+                            <li class="nav__item"><a href="#" class="nav__link">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <main>
+          <article>
+        
+            <div class="video-container">
+              <video id="myVideo" muted loop>
+                  <source src="bohovideo.mp4" type="video/mp4">
+                  Your browser does not support the video tag.
+              </video>
+          </div>
+      
+      
+      </table>
+      
+       <h2>FULL SERVICE DESIGN
+      </h2>
+      <br>
+         <p>Our preference as designers is to be brought on to the project as early in the process as possible. We love collaborating with architects, structural engineers, and builders to help you create the vision you have for your home. Whether your project is a new build, gut renovation, furnishing, or somewhere in between, full-service design includes:</p>
+      <br>
+      <section>
+      <ul>
+      <li>1)a detailed design questionnaire that helps us to understand the scope and needs of the project, as well as your specific design style</li>
+      <li>2)design plan including preliminary sketches, CAD drawings and elevations, and 3D renderings if needed</li>
+      <li>3)close collaboration with architects, contractors, and other tradespeople</li>
+      <li>4) comprehensive material & finish selections for renovations</li>
+      <li>5) furniture, lighting, accessory selections for furnishings</li>
+      <li>6)detailed specification sheets to track all product costs and lead times</li>
+      <li> 7)purchasing and procurement</li>
+      <li>8)project management and regular site visits to monitor design execution</li>
+      <li>9) installation and final touches</li>
+      
+      </ul>
+      <br>
+       <div class="message-symbol" onclick="toggleChatbot()">
+            
+            <img  src="chaty1.jpeg" alt="Message" width="70"class="rounded-circle"  />
+          </div>
+          <div class="chat-container" id="chatContainer" style="display: none;">
+           <div class="container">
+            <div class="chat-header">
+              <div class="logo">
+                <img src="https://w7.pngwing.com/pngs/811/700/png-transparent-chatbot-internet-bot-business-natural-language-processing-facebook-messenger-business-people-logo-fictional-character.png" alt="cwt" width="100px" />
+              <span class="close-button" onclick="toggleChatbot()">&times;</span>
+          </div>
+              <div class="title">Let's Chat</div>
+            </div>
+            <div class="chat-body"></div>
+            <div class="chat-input">
+              <div class="input-sec">
+                <input type="text" id="txtInput" placeholder="Type here" autofocus />
+              </div>
+              <div class="send">
+                <input type="button" value="send">
+              </div>
+            </div>
+          </div>
+          </div>
+      
+      
+     
+          </article>
+          </main>
+
+        <!--===== MAIN JS =====-->
+        <script src="assets/js/main.js"></script>
+        <script>
+          /*===== EXPANDER MENU  =====*/ 
+const showMenu = (toggleId, navId)=>{
+    const toggle = document.getElementById(toggleId),
+    nav = document.getElementById(navId)
+  
+    if(toggle && nav){
+      toggle.addEventListener('click', ()=>{
+        nav.classList.toggle('show')
+        toggle.classList.toggle('bx-x')
+      })
+    }
+  }
+  showMenu('header-toggle','nav-menu')
+
+  /*===== ACTIVE AND REMOVE MENU =====*/
+const navLink = document.querySelectorAll('.nav__link');   
+
+function linkAction(){
+  /*Active link*/
+  navLink.forEach(n => n.classList.remove('active'));
+  this.classList.add('active');
+}
+navLink.forEach(n => n.addEventListener('click', linkAction));
+
+        </script>
+        <script>
+        document.addEventListener("DOMContentLoaded", function() {
+    const video = document.getElementById("myVideo");
+    let isPlaying = false;
+
+    video.addEventListener("click", function() {
+        if (isPlaying) {
+            video.pause();
+        } else {
+            video.play();
+        }
+        isPlaying = !isPlaying;
+    });
+});
+
+      </script>
+      <script>
+        const chatContainer = document.getElementById('chatContainer');
+      
+            function toggleChatbot() {
+              if (chatContainer.style.display === 'none') {
+                chatContainer.style.display = 'block';
+              } else {
+                chatContainer.style.display = 'none';
+              }
+            }
+      
+             const chatBody = document.querySelector(".chat-body");
+      const txtInput = document.querySelector("#txtInput");
+      const send = document.querySelector(".send");
+      
+      send.addEventListener("click", () => renderUserMessage());
+      
+      txtInput.addEventListener("keyup", (event) => {
+        if (event.keyCode === 13) { // Enter key
+          renderUserMessage();
+        }
+      });
+      
+      const renderUserMessage = () => {
+        const userInput = txtInput.value;
+        renderMessageEle(userInput, "user");
+        txtInput.value = "";
+        setTimeout(() => {
+          renderChatbotResponse(userInput);
+          setScrollPosition();
+        }, 600);
+      };
+      
+      const renderChatbotResponse = (userInput) => {
+        const res = getChatbotResponse(userInput);
+        renderMessageEle(res);
+      };
+      
+      const renderMessageEle = (txt, type) => {
+        let className = "user-message";
+        if (type !== "user") {
+          className = "chatbot-message";
+        }
+        const messageEle = document.createElement("div");
+        const txtNode = document.createTextNode(txt);
+        messageEle.classList.add(className);
+        messageEle.append(txtNode);
+        chatBody.append(messageEle);
+      };
+      
+      const getChatbotResponse = (userInput) => {
+        return responseObj[userInput] == undefined
+          ? "Please try something else"
+          : responseObj[userInput];
+      };
+      
+      const setScrollPosition = () => {
+        if (chatBody.scrollHeight > 0) {
+          chatBody.scrollTop = chatBody.scrollHeight;
+        }
+      };
+      
+      const responseObj = {
+        hello: "Hey! How are you doing?",
+        hey: "Hey! What's Up",
+        "Color Layout": "Our website Love & Aesthetics",
+        "Christmas ideas":"christmassyyyyy",
+        "why love and aesthetics":"Our interior design services are \n tailored to your space, style, and budget.",
+        "suggest me a style":"Stylish Boho theme is trending now!",
+        "maximum budget":"For 1BHK:1,50,000;2BHK:2,00,000;3BHK:3,00,000,4BHK and Villa cost around 5,00,000",
+        "best designs 2023":"Midcentury Blue,Bohemian,Minimalist are popular",
+        "how love and aesthetics works":"Step1:Book Consultation,Step2:Estimate the price,Step3:Tell your ideas",
+        today: new Date().toDateString(),
+        time: new Date().toLocaleTimeString(),
+      };
+      
+      
+        </script>
+    </body>
+</html>
